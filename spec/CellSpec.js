@@ -1,6 +1,6 @@
 describe("Cell", function() {
 
-  var Conway = getConway();
+  var Conway = ConwayApp.getConway();
   var cell;
   beforeEach(function() {
   	cell = Conway.generateNewCell(0, 1);
