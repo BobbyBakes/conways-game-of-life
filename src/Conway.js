@@ -96,7 +96,7 @@ var conway = {
 		  return nextCells;
 		  
 		}
-		
+
 		var newCells = getCopyOfCurrentCells();
 		
 		var nextGeneration = {
