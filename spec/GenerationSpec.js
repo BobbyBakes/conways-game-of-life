@@ -8,7 +8,7 @@ describe("a generation", function(){
   
   it("does not have any cells by default", function() {
     generation = Conway.getCurrentGeneration();
-	
-	expect(Object.keys(generation.getCells()).length).toBe(0);
+  
+    expect(Object.keys(generation.getCells()).length).toBe(0);
   });
 });
