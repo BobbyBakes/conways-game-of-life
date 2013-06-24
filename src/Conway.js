@@ -9,8 +9,9 @@ var nextCells = {};
 
 var conway = {
 
-      cloneCell : function(oldCell) {
-    var newCell = conway.generateNewCell(oldCell.getX(), oldCell.getY());
+  cloneCell : function(oldCell) {
+    
+	var newCell = conway.generateNewCell(oldCell.getX(), oldCell.getY());
     
     if( oldCell.isAlive() ){
       newCell.live();
@@ -65,7 +66,7 @@ var conway = {
     
     var currentGeneration = {
       getCells : function() {
-      return currentCells;
+        return currentCells;
       },
       
       getCellAt : function(x, y) {
@@ -99,6 +100,22 @@ var conway = {
     
     var newCells = getCopyOfCurrentCells();
     
+	//TODO: refactor this searching logic for performance
+	//only check live cells, and their neighbors
+	Object.keys(newCells).forEach( function(cellIndex) {
+	  var newCell = newCells[cellIndex];
+	  console.debug('got here');
+	  console.debug(newCell);
+	  console.debug(newCell.isAlive());
+	  var liveNeighbors = ConwayApp.GenerationHelper.getLiveNeighborsForCell(newCell, newCells);
+	  
+	  if (ConwayApp.GenerationHelper.cellShouldLive(newCell, liveNeighbors)) {
+	    newCell.live();
+	  } else {
+	    newCell.die();
+	  }
+	});
+	
     var nextGeneration = {
       getCells: function(){return newCells; },
       
@@ -128,13 +145,13 @@ ConwayApp.GenerationHelper = {
   },
 
   getLiveNeighborsForCell : function(cell , currentGeneration) {
-    var currentCells = currentGeneration.getCells();
-  var liveNeighbors = [];
+    var currentCells = currentGeneration.hasOwnProperty('getCells') ? currentGeneration.getCells() : currentGeneration;
+    var liveNeighbors = [];
   
-  var currentX = cell.getX();
-  var currentY = cell.getY();
+    var currentX = cell.getX();
+    var currentY = cell.getY();
   
-  //cells that don't exist are treated as dead cells
+    //cells that don't exist are treated as dead cells
     var neighborIsAlive = function(neighbor) {
     return (typeof neighbor != 'undefined' && neighbor.isAlive());
   }

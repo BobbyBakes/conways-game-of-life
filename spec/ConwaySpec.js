@@ -1,6 +1,10 @@
 describe("Conway", function(){
-  //var Conway = ConwayApp.getConway();
-  Conway = ConwayApp.getConway();
+  var Conway; 
+  
+  beforeEach(function(){
+    Conway = ConwayApp.getConway();
+  });
+  
   describe("#getCurrentGeneration", function() {
     it("returns the current generation's model", function() {
       var currentGeneration = Conway.getCurrentGeneration();
@@ -12,16 +16,19 @@ describe("Conway", function(){
   describe("#getNextGeneration", function() {
     describe("using a generation with 9 cells", function() {
   
+	beforeEach(function() {
      [0,1,2].forEach( function(xCoordinate){
        [0,1,2].forEach(function(yCoordinate){
          var cell = Conway.generateNewCell(xCoordinate,yCoordinate);
          Conway.getCurrentGeneration().addCell(cell);
        });
      });
-    
+    });
+	
   describe("with a single live cell that should die", function(){  
     beforeEach(function() {
-      Conway.getCurrentGeneration().getCellAt(1,1);
+	  var liveCell = Conway.generateNewCell(1,1).live();
+	  Conway.getCurrentGeneration().addCell(liveCell);
     });
 
     it("returns the generation that has been incremented by one turn", function() {
@@ -41,7 +48,7 @@ describe("Conway", function(){
     expect(nextGenSize).toEqual(currentGenSize);
   });
     
-    it("creates new cells, that are independent of the old generation", function() {
+  it("creates new cells, that are independent of the old generation", function() {
     var oldCell = Conway.getCurrentGeneration().getCellAt(1,1);
     
     var newCell = Conway.getNextGeneration().getCellAt(1,1);
