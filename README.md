@@ -1,4 +1,3 @@
-conways-game-of-life
+# conways-game-of-life
 ====================
-
-a JavaScript library that helps simulate Conway's game of life.
+A JavaScript library that helps simulate Conway's game of life.
